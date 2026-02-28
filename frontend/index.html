@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conut — AI Chief of Operations</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <!-- Markdown rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.1/marked.min.js"></script>
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <span class="logo-icon">🍩</span>
+                <div>
+                    <h1>Conut</h1>
+                    <p class="logo-subtitle">AI Chief of Operations</p>
+                </div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <p class="nav-label">Capabilities</p>
+            <button class="nav-card" data-question="What product combos should we promote at Conut?">
+                <i class="fa-solid fa-layer-group"></i>
+                <div>
+                    <span class="nav-card-title">Combo Optimizer</span>
+                    <span class="nav-card-desc">Smart product bundles</span>
+                </div>
+            </button>
+            <button class="nav-card" data-question="What will our sales look like next quarter?">
+                <i class="fa-solid fa-chart-line"></i>
+                <div>
+                    <span class="nav-card-title">Demand Forecast</span>
+                    <span class="nav-card-desc">Sales predictions</span>
+                </div>
+            </button>
+            <button class="nav-card" data-question="Should Conut open a new branch? Evaluate our expansion readiness.">
+                <i class="fa-solid fa-building"></i>
+                <div>
+                    <span class="nav-card-title">Expansion Analysis</span>
+                    <span class="nav-card-desc">Growth feasibility</span>
+                </div>
+            </button>
+            <button class="nav-card" data-question="How many staff do we need per shift at each branch?">
+                <i class="fa-solid fa-users"></i>
+                <div>
+                    <span class="nav-card-title">Staff Optimizer</span>
+                    <span class="nav-card-desc">Shift scheduling</span>
+                </div>
+            </button>
+            <button class="nav-card" data-question="How do we grow our coffee and milkshake sales?">
+                <i class="fa-solid fa-mug-hot"></i>
+                <div>
+                    <span class="nav-card-title">Beverage Growth</span>
+                    <span class="nav-card-desc">Coffee & milkshake strategy</span>
+                </div>
+            </button>
+            <button class="nav-card" data-question="Where in Lebanon should Conut open a new branch?">
+                <i class="fa-solid fa-location-dot"></i>
+                <div>
+                    <span class="nav-card-title">Location Scout</span>
+                    <span class="nav-card-desc">Market gap analysis</span>
+                </div>
+            </button>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button class="new-chat-btn" id="newChatBtn">
+                <i class="fa-solid fa-plus"></i> New Conversation
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Chat Area -->
+    <main class="chat-main">
+        <!-- Top bar -->
+        <header class="chat-header">
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle sidebar">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="chat-header-info">
+                <h2>Chat</h2>
+                <span class="status-dot" id="statusDot"></span>
+                <span class="status-text" id="statusText">Connecting...</span>
+            </div>
+        </header>
+
+        <!-- Messages container -->
+        <div class="messages-container" id="messagesContainer">
+            <!-- Welcome screen -->
+            <div class="welcome-screen" id="welcomeScreen">
+                <div class="welcome-icon">🍩</div>
+                <h2>Welcome to Conut AI</h2>
+                <p>I'm your AI Chief of Operations. Ask me anything about Conut's business — from sales forecasts to staffing optimization.</p>
+                <div class="quick-actions">
+                    <button class="quick-btn" data-question="Give me an overview of all Conut branches' performance.">
+                        <i class="fa-solid fa-chart-pie"></i> Branch Overview
+                    </button>
+                    <button class="quick-btn" data-question="What product combos should we promote at Conut?">
+                        <i class="fa-solid fa-layer-group"></i> Best Combos
+                    </button>
+                    <button class="quick-btn" data-question="How many staff do we need per shift at each branch?">
+                        <i class="fa-solid fa-users"></i> Staffing Plan
+                    </button>
+                    <button class="quick-btn" data-question="Where in Lebanon should Conut open a new branch?">
+                        <i class="fa-solid fa-location-dot"></i> New Location
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input area -->
+        <div class="input-area">
+            <form class="input-form" id="chatForm">
+                <div class="input-wrapper">
+                    <textarea
+                        id="messageInput"
+                        placeholder="Ask about sales, staffing, combos, expansion..."
+                        rows="1"
+                        aria-label="Message input"
+                    ></textarea>
+                    <button type="submit" class="send-btn" id="sendBtn" aria-label="Send message" disabled>
+                        <i class="fa-solid fa-arrow-up"></i>
+                    </button>
+                </div>
+                <p class="input-hint">Powered by Claude · 6 ML models · Real Conut data</p>
+            </form>
+        </div>
+    </main>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>

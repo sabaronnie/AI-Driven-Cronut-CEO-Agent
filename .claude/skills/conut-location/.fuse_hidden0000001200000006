@@ -1,0 +1,36 @@
+# Conut Branch Location Recommender
+
+## Tool
+`get_branch_location_recommendation`
+
+## When to use
+Use when the user asks about:
+- Where to open a new Conut branch
+- Best locations in Lebanon for expansion
+- Market gap analysis by area
+- Which Lebanese areas are underserved for coffee/bakery shops
+- Competitor density analysis
+- Location recommendation for a new store
+
+## How to call
+```python
+from branch_location_recommender import get_branch_location_recommendation
+result = get_branch_location_recommendation(top_n=5)
+result = get_branch_location_recommendation(governorate="Beirut", top_n=3)
+result = get_branch_location_recommendation(min_population=50000)
+```
+
+## What it returns
+- Ranked list of Lebanese areas by opportunity score
+- Market gap analysis (expected vs actual competitors)
+- Population, social activity, traffic, and competitor data per area
+- Model R² and feature importances
+- Areas to avoid (oversaturated)
+
+## Data
+Uses a curated dataset of 24 Lebanese areas with population, social activity,
+traffic, competitor counts, university presence, and tourism scores.
+Sources: CAS 2018-19, World Population Review, Yelleb, BAM Lebanon, TripAdvisor.
+
+## Excluded locations
+Tyre, Jnah (Beirut), and Batroun are excluded (existing Conut branches).
