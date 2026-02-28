@@ -59,7 +59,7 @@ Features a web-based chat interface powered by Claude (Anthropic) with 6 ML tool
 ## Project Structure
 
 ```
-Hackaton/
+Hackathon/
 ├── frontend/                         # Chat UI
 │   ├── index.html                    # Main page
 │   ├── css/styles.css                # Styling
@@ -139,28 +139,6 @@ Press `Ctrl+C` in the terminal, or run:
 docker compose down
 ```
 
-## Alternative — Manual Setup (without Docker)
-
-```bash
-# 1. Create virtual environment
-python3 -m venv venv
-source venv/bin/activate
-
-# 2. Install dependencies
-pip install -r backend/requirements.txt
-
-# 3. Install Claude Code (OpenClaw)
-npm install -g @anthropic-ai/claude-code
-
-# 4. Configure
-cp backend/.env.example backend/.env
-# Edit backend/.env — add your ANTHROPIC_API_KEY
-
-# 5. Start the server
-python3 backend/server.py
-# → Open http://localhost:8000
-```
-
 ## CLI Usage (without frontend)
 
 ```bash
@@ -201,10 +179,10 @@ Revenue by category across delivery/takeaway/table channels per branch. The raw 
 Per-customer delivery order history. Dropped the `Total By Branch` summary rows to avoid inflating aggregates. Removed 24 void/cancelled orders (total = 0.00) since they don't represent real demand. Engineered `first_order` and `last_order` timestamps by cleaning trailing colons from Omega's date format (`2025-12-31 19:04:` → `2025-12-31 19:04`), giving us customer lifetime windows for demand forecasting.
 
 #### 3. rep_s_00191_SMRY → `cleaned_sales_by_item.csv`
-Hierarchical Division → Group → Item revenue breakdown. The raw file nests branch, division, and group as stateful headers rather than columns — we flattened this hierarchy into explicit columns via stateful parsing. Dropped all `Total by Group/Division/Branch` aggregate rows to keep only leaf-level item data. Removed 456 zero-revenue rows (free toppings, customization options) that have no value for revenue-based models like combo optimization and coffee/milkshake growth analysis.
+Hierarchical Division → Group → Item revenue breakdown. The raw file nests branch, division, and group as stateful headers rather than columns — we flattened this hierarchy into explicit columns via stateful parsing. Dropped all `Total by Group/Division/Branch` aggregate rows to keep only item data. Removed 456 zero-revenue rows (free toppings, customization options) that have no value for revenue-based models like combo optimization and coffee/milkshake growth analysis.
 
 #### 4. REP_S_00502 → `cleaned_sales_by_customer.csv`
-Line-item detail per customer delivery order. Dropped 1,189 rows with price = 0.00 — these are free add-ons and options that don't contribute to revenue modeling. Kept negative-quantity rows (qty = -1) intentionally, as these represent cancellations and are useful for identifying refund patterns. Engineered per-person totals by buffering items and flushing on the `Total :` delimiter row.
+Line-item detail per customer delivery order. Dropped 1,189 rows with price = 0.00 — these are free add-ons and options that don't contribute to revenue modeling. Kept negative-quantity rows (qty = -1) intentionally, as these were assumed to represent refunds and are useful for identifying product interest patterns. Engineered per-person totals by buffering items and flushing on the `Total :` delimiter row.
 
 #### 5. rep_s_00435_SMRY → `cleaned_avg_sales_by_menu.csv`
 Customer count, revenue, and average spend per channel per branch. Key engineering: used MultiIndex reindexing to ensure every branch has all 3 channels (delivery, takeaway, table), zero-filling missing combinations. This matters because some branches genuinely don't operate certain channels — rather than treating these as missing data, we encode them as 0 to preserve the structural truth for the expansion feasibility model.
@@ -213,7 +191,7 @@ Customer count, revenue, and average spend per channel per branch. Key engineeri
 Monthly revenue per branch. Main Street Coffee (Batroun) is missing August 2025 because it opened in September — we zero-filled this rather than interpolating, so the model sees the real operational timeline. Engineered separate `month` and `year` columns from the raw date headers for time-series feature extraction in demand forecasting.
 
 #### 7. REP_S_00461 → `cleaned_attendance.csv`
-Employee punch-in/out records. **Dropped employee ID and name columns entirely** — these are PII (personally identifiable information) and irrelevant to our staffing models, which only need shift timing and branch. Converted Omega's `HH.MM.SS` time format to standard `HH:MM:SS` and parsed dates from `01-Dec-25` format to proper datetime objects, enabling `work_duration` computation for shift-level staffing predictions.
+Employee punch-in/out records. **Dropped employee ID and name columns entirely** — these are personally identifiable information and irrelevant to our staffing models, which only need shift timing and branch. Converted Omega's `HH.MM.SS` time format to standard `HH:MM:SS` and parsed dates from `01-Dec-25` format to proper datetime objects, enabling `work_duration` computation for shift-level staffing predictions.
 
 #### 8. REP_S_00194_SMRY → `cleaned_tax_report.csv`
 Tax report with multiple tax rate columns. **Dropped all tax columns except VAT 11%** — every other tax column (VAT 0%, exempt, etc.) contained only 0.00 values across all branches. Retaining only the active tax column keeps the dataset lean for the expansion feasibility model's financial scoring.
